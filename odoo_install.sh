@@ -27,8 +27,8 @@ OE_PORT="8069"
 OE_VERSION="16.0"
 # Set this to True if you want to install the Odoo enterprise version!
 IS_ENTERPRISE="False"
-# Installs postgreSQL V14 instead of defaults (e.g V12 for Ubuntu 20/22) - this improves performance
-INSTALL_POSTGRESQL_FOURTEEN="True"
+# Installs newest postgreSQL instead of defaults (e.g V12 for Ubuntu 20/22) - this improves performance
+INSTALL_POSTGRESQL_NEWEST="True"
 # Set this to True if you want to install Nginx!
 INSTALL_NGINX="False"
 # Set the superadmin password - if GENERATE_RANDOM_PASSWORD is set to "True" we will automatically generate a random password, otherwise we use this one
@@ -46,13 +46,13 @@ ENABLE_SSL="True"
 ADMIN_EMAIL="odoo@example.com"
 ##
 ###  WKHTMLTOPDF download links
-## === Ubuntu Trusty x64 & x32 === (for other distributions please replace these two links,
+## === Debian Bullseye (11) x64 & x32 === (for other distributions please replace these two links,
 ## in order to have correct version of wkhtmltopdf installed, for a danger note refer to
 ## https://github.com/odoo/odoo/wiki/Wkhtmltopdf ):
 ## https://www.odoo.com/documentation/16.0/administration/install.html
 
-WKHTMLTOX_X64="https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.$(lsb_release -c -s)_amd64.deb"
-WKHTMLTOX_X32="https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.$(lsb_release -c -s)_i386.deb"
+WKHTMLTOX_X64="https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-2/wkhtmltox_0.12.6.1-2.$(lsb_release -c -s)_amd64.deb"
+WKHTMLTOX_X32="https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-2/wkhtmltox_0.12.6.1-2.$(lsb_release -c -s)_i386.deb"
 #--------------------------------------------------
 # Update Server
 #--------------------------------------------------
@@ -60,21 +60,21 @@ echo -e "\n---- Update Server ----"
 # universe package is for Ubuntu 18.x
 sudo add-apt-repository universe
 # libpng12-0 dependency for wkhtmltopdf
-sudo add-apt-repository "deb http://mirrors.kernel.org/ubuntu/ xenial main"
+sudo add-apt-repository ppa:linuxuprising/libpng12
 sudo apt-get update
 sudo apt-get upgrade -y
-sudo apt-get install libpq-dev
+sudo apt install libpng12-0
 
 #--------------------------------------------------
 # Install PostgreSQL Server
 #--------------------------------------------------
 echo -e "\n---- Install PostgreSQL Server ----"
-if [ $INSTALL_POSTGRESQL_FOURTEEN = "True" ]; then
+if [ $INSTALL_POSTGRESQL_NEWEST = "True" ]; then
     echo -e "\n---- Installing postgreSQL V14 due to the user it's choise ----"
     sudo curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc|sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg
     sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
     sudo apt-get update
-    sudo apt-get install postgresql-14
+    sudo apt-get install postgresql
 else
     echo -e "\n---- Installing the default postgreSQL version based on Linux version ----"
     sudo apt-get install postgresql postgresql-server-dev-all -y
@@ -94,15 +94,15 @@ sudo apt-get install git python3-cffi build-essential wget python3-dev python3-v
 echo -e "\n---- Install python packages/requirements ----"
 sudo -H pip3 install -r https://github.com/odoo/odoo/raw/${OE_VERSION}/requirements.txt
 
-echo -e "\n---- Installing nodeJS NPM and rtlcss for LTR support ----"
+#echo -e "\n---- Installing nodeJS NPM and rtlcss for LTR support ----"
 sudo apt-get install nodejs npm -y
-sudo npm install -g rtlcss
+#sudo npm install -g rtlcss
 
 #--------------------------------------------------
 # Install Wkhtmltopdf if needed
 #--------------------------------------------------
 if [ $INSTALL_WKHTMLTOPDF = "True" ]; then
-  echo -e "\n---- Install wkhtml and place shortcuts on correct place for ODOO 13 ----"
+  echo -e "\n---- Install wkhtml and place shortcuts on correct place for ODOO ----"
   #pick up correct one from x64 & x32 versions:
   if [ "`getconf LONG_BIT`" == "64" ];then
       _url=$WKHTMLTOX_X64
