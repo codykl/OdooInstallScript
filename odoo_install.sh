@@ -58,14 +58,14 @@ WKHTMLTOX_X32="https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6
 #--------------------------------------------------
 echo -e "\n---- Update Server ----"
 # required for add-apt-repository
-sudo apt-get -y install software-properties-common
+# sudo apt-get -y install software-properties-common
 # universe package is for Ubuntu 18.x
-sudo add-apt-repository universe
+# sudo add-apt-repository universe
 # libpng12-0 dependency for wkhtmltopdf
-sudo add-apt-repository ppa:linuxuprising/libpng12
+# sudo add-apt-repository ppa:linuxuprising/libpng12
 sudo apt-get update
 sudo apt-get upgrade -y
-sudo apt install libpng12-0
+#sudo apt install libpng12-0
 
 #--------------------------------------------------
 # Install PostgreSQL Server
