@@ -65,7 +65,7 @@ echo -e "\n---- Update Server ----"
 # sudo add-apt-repository ppa:linuxuprising/libpng12
 sudo apt-get update
 sudo apt-get upgrade -y
-sudo apt install curl gpg -y
+sudo apt install curl gpg libpq-dev -y
 #sudo apt install libpng12-0
 
 #--------------------------------------------------
