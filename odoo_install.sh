@@ -74,7 +74,7 @@ sudo apt install curl gpg libpq-dev -y
 #--------------------------------------------------
 echo -e "\n---- Install PostgreSQL Server ----"
 if [ $INSTALL_POSTGRESQL_NEWEST = "True" ]; then
-    echo -e "\n---- Installing postgreSQL V14 due to the user it's choise ----"
+    echo -e "\n---- Installing latest postgreSQL due to the user's choice ----"
     sudo curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc|sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg
     sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
     sudo apt-get update
@@ -134,7 +134,7 @@ sudo chown $OE_USER:$OE_USER /var/log/$OE_USER
 # Install ODOO
 #--------------------------------------------------
 echo -e "\n==== Installing ODOO Server ===="
-sudo git clone --depth 1 --branch $OE_VERSION $OE_ODOO_REPO $OE_HOME_EXT/
+sudo git -c http.sslVerify=false clone --depth 1 --branch $OE_VERSION $OE_ODOO_REPO $OE_HOME_EXT/
 
 if [ $IS_ENTERPRISE = "True" ]; then
     # Odoo Enterprise install!
