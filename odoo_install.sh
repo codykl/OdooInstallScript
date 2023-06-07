@@ -157,8 +157,8 @@ if [ $IS_ENTERPRISE = "True" ]; then
 
     echo -e "\n---- Added Enterprise code under $OE_HOME/enterprise/addons ----"
     echo -e "\n---- Installing Enterprise specific libraries ----"
-    sudo -H pip3 install num2words ofxparse dbfread ebaysdk firebase_admin
-    sudo -H pip3 install pyOpenSSL==23.2.0
+#    sudo -H pip3 install num2words ofxparse dbfread ebaysdk firebase_admin
+#    sudo -H pip3 install pyOpenSSL==23.2.0
     sudo npm install -g less
     sudo npm install -g less-plugin-clean-css
 fi
