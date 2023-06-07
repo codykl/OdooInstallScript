@@ -17,7 +17,7 @@
 OE_USER="odoo"
 OE_HOME="/$OE_USER"
 OE_HOME_EXT="/$OE_USER/${OE_USER}-server"
-OE_ODOO_REPO="https://www.github.com/odoo/odoo"
+OE_ODOO_REPO="https://10.109.192.16/codykl/odoo.git"
 # The default port where this Odoo instance will run under (provided you use the command -c in the terminal)
 # Set to true if you want to install it, false if you don't need it or have it already installed.
 INSTALL_WKHTMLTOPDF="True"
@@ -138,7 +138,7 @@ sudo git -c http.sslVerify=false clone --depth 1 --branch $OE_VERSION $OE_ODOO_R
 
 if [ $IS_ENTERPRISE = "True" ]; then
     # Odoo Enterprise install!
-    sudo pip3 install psycopg2-binary pdfminer.six
+    # sudo pip3 install psycopg2-binary pdfminer.six
     echo -e "\n--- Create symlink for node"
     sudo ln -s /usr/bin/nodejs /usr/bin/node
     sudo su $OE_USER -c "mkdir $OE_HOME/enterprise"
@@ -156,9 +156,9 @@ if [ $IS_ENTERPRISE = "True" ]; then
     #done
 
     echo -e "\n---- Added Enterprise code under $OE_HOME/enterprise/addons ----"
-    echo -e "\n---- Installing Enterprise specific libraries ----"
-#    sudo -H pip3 install num2words ofxparse dbfread ebaysdk firebase_admin
-#    sudo -H pip3 install pyOpenSSL==23.2.0
+    #echo -e "\n---- Installing Enterprise specific libraries ----"
+    #sudo -H pip3 install num2words ofxparse dbfread ebaysdk firebase_admin
+    #sudo -H pip3 install pyOpenSSL==23.2.0
     sudo npm install -g less
     sudo npm install -g less-plugin-clean-css
 fi
